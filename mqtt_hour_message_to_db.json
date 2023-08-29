@@ -1,0 +1,27 @@
+{
+    "ruleArn": "arn:aws:iot:eu-central-1:284535252702:rule/mqtt_hour_message_to_db",
+    "rule": {
+        "ruleName": "mqtt_hour_message_to_db",
+        "sql": "SELECT * FROM \"sdk/test/js\" WHERE hour = true",
+        "description": "",
+        "createdAt": "2023-08-29T20:18:40+02:00",
+        "actions": [
+            {
+                "dynamoDB": {
+                    "tableName": "sensor_measuration",
+                    "roleArn": "arn:aws:iam::284535252702:role/service-role/mqtt_hour_msg",
+                    "operation": "INSERT",
+                    "hashKeyField": "timestamp",
+                    "hashKeyValue": "${timestamp()}",
+                    "hashKeyType": "NUMBER",
+                    "rangeKeyField": "uuid",
+                    "rangeKeyValue": "${uuid}",
+                    "rangeKeyType": "STRING",
+                    "payloadField": "payload"
+                }
+            }
+        ],
+        "ruleDisabled": false,
+        "awsIotSqlVersion": "2016-03-23"
+    }
+}
